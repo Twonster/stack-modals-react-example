@@ -1,31 +1,31 @@
 import {Modal} from "../../components";
 import React, {FC, useState} from "react";
-import {LoginModalProps} from "./types";
-import {Button, CardActions, CardContent, CardHeader, TextField} from "@mui/material";
-import {useModal} from "../../contexts/Modals/ModalContextProvider";
+import {ForgotPasswordModalProps} from "./types";
+import {Button, CardActions, CardContent, TextField, Typography} from "@mui/material";
+import {useModal} from "../../contexts/Modals";
 import {ModalName} from "../../contexts/Modals/constants";
+import {BaseModalProps} from "../../components/Modal/types";
 
-const LoginModal: FC<LoginModalProps> = ({  modalKey, modalName, onClose, email, password, rememberMe }) => {
+const ForgotPasswordModal: FC<ForgotPasswordModalProps & BaseModalProps> = ({  modalKey, modalName, onClose, email }) => {
     const [emailText, setEmailText] = useState(email)
-    const [passwordText, setPasswordText] = useState(password)
-
     const { openModal } = useModal()
-
-    const handleForgotPassword = () => {
-        openModal(ModalName.FORGOT_PASSWORD, { email })
-    }
     return (
         <Modal modalName={modalName} modalKey={modalKey} onClose={onClose}>
-            <CardHeader>Login</CardHeader>
+            <Typography variant="h4">
+                Forgot password
+            </Typography>
+            <Typography>
+                Modal-key: {modalKey}
+            </Typography>
             <CardContent>
-                <TextField value={emailText} onChange={(event) => setEmailText(event.target.value)} label="email" type="text" />
-                <TextField value={passwordText} onChange={(event) => setPasswordText(event.target.value)} label="password" type="password" />
+                <TextField fullWidth value={emailText} onChange={(event) => setEmailText(event.target.value)} label="email" type="text" />
             </CardContent>
             <CardActions>
-                <Button>Login</Button>
-                <Button onClick={handleForgotPassword}>forgot password</Button>
+                <Button>Send</Button>
+                <Button onClick={() => openModal(ModalName.LOGIN, { email: emailText })}>Open Login Modal</Button>
             </CardActions>
         </Modal>
     )
 }
-export default LoginModal
+
+export default ForgotPasswordModal

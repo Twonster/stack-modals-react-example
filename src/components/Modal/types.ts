@@ -1,44 +1,11 @@
-import { PropsWithChildren, ReactNode } from 'react';
+import { PropsWithChildren } from 'react';
+import {ModalNameType, ModalScheme, OpenModalFnResult} from "stack-modals/types";
+import {ModalServiceState} from "../../contexts/Modals/types";
 
-import ReactModal from 'react-modal';
-
-import { ModalStore } from '@modules/modals/store';
-import { ModalNameType, OpenModalFnResult } from '@modules/modals/store/types';
-
-export type BaseModalProps = {
-  modalKey: OpenModalFnResult<ModalStore>;
-  modalName: ModalNameType<ModalStore>;
-  isOpen?: boolean;
-  onClose: (key: OpenModalFnResult<ModalStore>) => void;
-  onAfterClose?: () => void;
+export type BaseModalProps<S extends ModalScheme = ModalServiceState> = {
+  modalKey: OpenModalFnResult<S>;
+  modalName: ModalNameType<S>;
+  onClose: (key: OpenModalFnResult<S>) => void;
 };
 
-export type WithCloseConfirmationType = {
-  isDirty: boolean;
-  isSubmitted: boolean;
-};
-
-export type ModalOldProps = {
-  floatActionButton?: ReactNode;
-  bottomShadow?: boolean;
-  permanentBottomShadow?: boolean;
-  header?: ReactNode;
-  footer?: ReactNode;
-  contentClasses?: string;
-  fabClasses?: string;
-  withCloseConfirmation?: WithCloseConfirmationType;
-} & BaseModalProps &
-  Omit<ReactModal.Props, 'isOpen' | 'onAfterClose'>;
-
-export type ModalProps = PropsWithChildren<{
-  floatActionButton?: ReactNode;
-  bottomShadow?: boolean;
-  permanentBottomShadow?: boolean;
-  header?: ReactNode;
-  footer?: ReactNode;
-  contentClasses?: string;
-  fabClasses?: string;
-  withCloseConfirmation?: WithCloseConfirmationType;
-  className?: string;
-}> &
-  BaseModalProps;
+export type ModalProps = PropsWithChildren<BaseModalProps>

@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {Button, Card, Typography} from "@mui/material";
+import {useModal} from "./contexts/Modals";
+import {ModalName} from "./contexts/Modals/constants";
 
-function App() {
+const App = () => {
+    const { openModal, closeModal, openedModals } = useModal()
+
+    const handleOpenModal = () => {
+        openModal(ModalName.FORGOT_PASSWORD, { email: '' })
+    }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+      <Card sx={{
+          width: '400px',
+      }}>
+          <Typography variant="h3">MODALS SERVICE</Typography>
+          <Button onClick={() => {
+              openModal(ModalName.LOGIN, { email: 'test@mail.com', password: '11111111' })
+          }} variant="contained">Open Login Modal</Button>
+      </Card>
+
+  )
 }
 
-export default App;
+export default App
